@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stress Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Mechanical Stress Calculator</h2>
+        <label for="force">Force (N):</label>
+        <input type="number" id="force" placeholder="Enter Force">
+        
+        <label for="area">Area (m²):</label>
+        <input type="number" id="area" placeholder="Enter Area">
+        
+        <button onclick="calculateStress()">Calculate Stress</button>
+        
+        <h3 id="result">Stress: -</h3>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
