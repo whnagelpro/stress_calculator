@@ -11,9 +11,9 @@ function calculateStress() {
             return;
         }
     
-        console.log("Sending request to: http://127.0.0.1:5000/calculate");
+        console.log("Sending request to: https://stress_calculator-1.onrender.com/calculate");
     
-        fetch("http://127.0.0.1:5000/calculate", {  // Ensure it's pointing to the local Flask server
+        fetch("https://stress_calculator-1.onrender.com/calculate", {  // Ensure it's pointing to the local Flask server
             method: "POST",
             body: JSON.stringify({ force: force, area: area }),
             headers: { "Content-Type": "application/json" }
