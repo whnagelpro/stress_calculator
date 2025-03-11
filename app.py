@@ -1,19 +1,30 @@
-from flask import Flask, request, jsonify
+from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return "Flask is running!"
+    return render_template("index.html")  # This will load your HTML page
 
 @app.route("/calculate", methods=["POST"])
 def calculate():
     data = request.get_json()
-    return jsonify({"message": "Route exists!", "data_received": data})
+    
+    if not data:
+        return jsonify({"error": "Invalid JSON data received"}), 400
+
+    force = data.get("force")
+    area = data.get("area")
+
+    if force is None or area is None:
+        return jsonify({"error": "Missing force or area"}), 400
+    if not isinstance(force, (int, float)) or not isinstance(area, (int, float)):
+        return jsonify({"error": "Force and area must be numbers"}), 400
+    if area == 0:
+        return jsonify({"error": "Area cannot be zero"}), 400
+
+    stress = force / area
+    return jsonify({"stress": stress})
 
 if __name__ == "__main__":
-    print("✅ Available Routes:")
-    for rule in app.url_map.iter_rules():
-        print(f"{rule.endpoint}: {rule.rule}")
-
     app.run(debug=True, host="0.0.0.0")
