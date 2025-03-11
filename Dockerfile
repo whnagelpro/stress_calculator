@@ -1,18 +1,17 @@
-# syntax=docker/dockerfile:1
+# Use an official Python runtime as a parent image
+FROM python:3.9
 
-ARG PYTHON_VERSION=3.13.2
+# Set the working directory in the container
+WORKDIR /app
 
-FROM python:${PYTHON_VERSION}-slim
+# Copy the current directory contents into the container at /app
+COPY . /app
 
-LABEL fly_launch_runtime="flask"
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-WORKDIR /code
-
-COPY requirements.txt requirements.txt
-RUN pip3 install -r requirements.txt
-
-COPY . .
-
+# Expose port 8080 for Fly.io
 EXPOSE 8080
 
-CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=8080"]
+# Command to run the Flask app
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:8080", "app:app"]
