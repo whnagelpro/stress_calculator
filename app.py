@@ -49,6 +49,7 @@ def _corsify_actual_response(response):
     return response
 
 if __name__ == "__main__":
+    from app import app
     import os
     port = int(os.environ.get("PORT", 8080)) # Use Fly.io's default port (8080)
     app.run(debug=True, host="0.0.0.0", port=port)
