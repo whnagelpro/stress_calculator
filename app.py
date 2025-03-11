@@ -1,17 +1,17 @@
 from flask import Flask, render_template, request, jsonify
-from flask_cors import CORS
+from flask_cors import CORS  # Import CORS
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})  # Allow all origins
 
 @app.route("/")
 def home():
-    return render_template("index.html")  # This will load your HTML page
+    return render_template("index.html")
 
 @app.route("/calculate", methods=["POST"])
 def calculate():
     data = request.get_json()
-    
+
     if not data:
         return jsonify({"error": "Invalid JSON data received"}), 400
 
@@ -30,5 +30,5 @@ def calculate():
 
 if __name__ == "__main__":
     import os
-    port = int(os.environ.get("PORT", 10000))  # Use the port Render assigns
+    port = int(os.environ.get("PORT", 10000))  # Use Render's assigned port
     app.run(debug=True, host="0.0.0.0", port=port)
