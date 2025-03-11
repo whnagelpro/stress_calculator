@@ -1,12 +1,16 @@
-# fly.toml app configuration file generated for stress-calculator on 2025-03-11T12:50:14-07:00
+# fly.toml app configuration file generated for stress-calculator-wandering-rain-5663 on 2025-03-11T13:31:53-07:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'stress-calculator'
+app = 'stress-calculator-wandering-rain-5663'
 primary_region = 'lax'
 
 [build]
+  image = 'python:3.9'
+
+[experimental]
+  cmd = ["gunicorn", "-w", "4", "-b", "0.0.0.0:8080", "app:app"]
 
 [http_service]
   internal_port = 8080
